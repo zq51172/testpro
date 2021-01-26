@@ -18,17 +18,21 @@
 # print(result)
 
 
-def method(a):
+# def method(a):
+#
+#     print(a)
+#
+#     return a+2
+#
+# print(method(1))
 
-    print(a)
-
-    return a+2
-
-print(method(1))
-
-
-
-
-
+import pytest
+from hamcrest import *
 
 
+def test_hamcrest():
+    # assert_that(10, equal_to(9),"这是一个提示")
+
+    # assert_that(13,close_to(10,2))
+
+     assert_that("contains some string",contains_string("string"))

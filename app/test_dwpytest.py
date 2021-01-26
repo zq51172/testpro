@@ -1,9 +1,23 @@
+from _ast import Pass
+
 import pytest
 from appium import webdriver
 import time
 
+from appium.webdriver.common import mobileby
+from appium.webdriver.common.mobileby import MobileBy
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions
 
-class TestDW():
+
+def teardown():
+    # self.driver.back()
+    # self.driver.back()
+    # self.driver.quit()
+    Pass
+
+
+class TestDW:
     def setup(self):
         desire_cap = {
             "platformName": "Android",
@@ -24,13 +38,11 @@ class TestDW():
                                           "android.widget.LinearLayout/android.widget.FrameLayout/"
                                           "android.widget.LinearLayout/android.widget.RelativeLayout/"
                                           "androidx.viewpager.widget.ViewPager/android.widget.ImageView").click()
-        self.driver.find_element_by_accessibility_id("365淘房").click()
-        self.driver.find_element_by_id("com.house365.newhouse:id/close").click()
 
-    def teardown(self):
-        self.driver.back()
-        self.driver.back()
-        # self.driver.quit()
+        time.sleep(2)
+        self.driver.find_element_by_accessibility_id("365淘房").click()
+
+        self.driver.find_element_by_id("com.house365.newhouse:id/close").click()
 
     @pytest.mark.skip("此次测试不执行此用例")
     def test_search(self):
@@ -52,7 +64,8 @@ class TestDW():
                                           "android.widget.RelativeLayout/android.widget.LinearLayout/"
                                           "android.widget.TextView[1]").click()
 
-        time.sleep(5)
+        time.sleep(3)
+        self.driver.get_screenshot_as_file("D:/testpro/photos/search.png")
 
     @pytest.mark.skip("此次测试不执行此用例")
     def test_xfxqy(self):
@@ -83,6 +96,8 @@ class TestDW():
 
         # action = TouchAction(self.driver)
         # action.press(x=813,y=656).wait(100).move_to(x=767,y=502).release().perform()
+        time.sleep(3)
+        self.driver.get_screenshot_as_file("D:/testpro/photos/xfxqy.png")
 
     @pytest.mark.skip("此次测试不执行此用例")
     def test_esfxqy(self):
@@ -111,6 +126,8 @@ class TestDW():
                                           "android.view.View/android.widget.RelativeLayout[1]/"
                                           "android.widget.RelativeLayout/android.widget.RelativeLayout/"
                                           "android.widget.LinearLayout[2]").click()
+        time.sleep(3)
+        self.driver.get_screenshot_as_file("D:/testpro/photos/esfxqy.png")
 
     def test_myinfo(self):
         print("个人中心登录用例")
@@ -130,6 +147,14 @@ class TestDW():
                                                         'et_login_password")').send_keys("123456")
         self.driver.find_element_by_android_uiautomator('new UiSelector().resourceId("com.house365.newhouse:id/'
                                                         'btn_user_login")').click()
+
+        # print(self.driver.page_source)
+        # locator=self.driver.find_element_by_id("com.house365.newhouse:id/m_nickname")
+        locator = (MobileBy.ID, "com.house365.newhouse:id/m_nickname")
+        WebDriverWait(self.driver, 10).until(expected_conditions.visibility_of_element_located(locator))
+
+        time.sleep(3)
+        self.driver.get_screenshot_as_file("D:/testpro/photos/myinfo.png")
 
 
 if __name__ == '__main__':
